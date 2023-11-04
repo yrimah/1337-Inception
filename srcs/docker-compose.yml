@@ -1,0 +1,6 @@
+version: '3'
+services:
+  alpc:
+    image: alp
+    ports:
+      - 443:443
