@@ -16,4 +16,4 @@ wp core download --path=/var/www/html/ --allow-root
 
 wp core config --dbname=wordpress --dbuser=yrimah42 --dbpass=Yrimah42*ri@@ --path=/var/www/html/ --allow-root
 
-wp core install --url=yrimah.42.fr --title=ineption --admin_user=yrimah42 --admin_password=Yrimah42*ri@@ --admin_email=yrimah42@gmail.com --path=/var/www/html
+wp core install --url=yrimah.42.fr --title=ineption --admin_user=yrimah42 --admin_password=Yrimah42*ri@@ --admin_email=yrimah42@gmail.com --path=/var/www/html --allow-root
