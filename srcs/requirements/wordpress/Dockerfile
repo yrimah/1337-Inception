@@ -1,38 +1,15 @@
-FROM alpine:latest
+FROM debian:12
 
-WORKDIR /nginx
+WORKDIR /wordpress
 
-RUN apk update && apk upgrade && apk add nginx
+COPY ./tools/install.sh .
 
-RUN mkdir /var/www/html
+COPY ./conf/config.sh .
 
-RUN echo "<!DOCTYPE html>\
-<html>\
-<body>\
-\
-<h1>Welcome to yrimah(docker) nginx!</h1>\
-</body>\
-</html>" > /var/www/html/index.html
+RUN chmod +x ./config.sh ./install.sh
 
-RUN apk add openssl && mkdir /etc/nginx/ssl
+RUN /bin/sh ./install.sh
 
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/yrimah42.key -out /etc/nginx/ssl/yrimah42.crt -subj "/C=MO/L=BG/O=1337/CN=yrimah.42.fr"
+EXPOSE 9000
 
-RUN echo "\
-server {\
-    listen 443 ssl;\
-    listen [::]:443 ssl;\
-\
-    server_name yrimah.42.fr;\
-\
-    ssl_certificate /etc/nginx/ssl/yrimah42.crt;\
-    ssl_certificate_key /etc/nginx/ssl/yrimah42.key;\
-    ssl_protocols TLSv1.2 TLSv1.3;\
-\
-    index index.html;\
-    root /var/www/html;\
-}" > /etc/nginx/http.d/default.conf
-
-EXPOSE 443
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["./config.sh"]

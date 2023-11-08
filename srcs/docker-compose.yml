@@ -1,6 +1,60 @@
 version: '3'
 services:
-  alpc:
-    image: alp
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb
+    image: mariadb:1337
+    ports:
+      - 3306:3306
+    networks:
+      - inception
+    restart: always
+    env_file: .env
+    volumes:
+      - wordpressdb:/var/lib/mysql
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/
+    image: nginx:1337
     ports:
       - 443:443
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    env_file: .env
+    volumes:
+      - wordpress_files:/var/www/html
+    restart: always
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress/
+    image: wordpress:1337
+    ports:
+      - 9000:9000
+    networks:
+      - inception
+    env_file: .env
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_files:/var/www/html
+volumes:
+  wordpressdb:
+    name: wordpressdb
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/yrimah42/data/wd_db'
+  wordpress_files:
+    name: wordpress_files
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/yrimah42/data/wd_files'
+networks:
+  inception:
+    name: inception

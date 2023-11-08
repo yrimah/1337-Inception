@@ -1,13 +1,17 @@
-FROM debian:latest
+FROM debian:12
 
 WORKDIR /mariadb
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install mariadb-server -y
+COPY ./tools/install.sh .
 
-COPY ./tools/config.sh .
-COPY ./tools/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-RUN chmod u+x config.sh
+COPY ./conf/config.sh .
+
+RUN chmod u+x config.sh install.sh
 
 EXPOSE 3306
 
+RUN /bin/sh ./install.sh
+#&& /bin/sh ./config.sh
+
 CMD ["./config.sh"]
+#CMD ["/usr/bin/mysqld_safe"]
