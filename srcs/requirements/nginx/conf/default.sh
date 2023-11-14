@@ -12,7 +12,7 @@ echo "server {
     ssl_certificate_key $FILE_KEY;
     ssl_protocols TLSv1.3;
 
-    index index.html index.php;
+    index index.php;
     root /var/www/html;
 
     location ~ \.php$ {
