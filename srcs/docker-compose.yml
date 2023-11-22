@@ -78,6 +78,18 @@ services:
     depends_on:
       - wordpress
     restart: always
+  grafana:
+    container_name: grafana
+    build: requirements/bonus/grafana/
+    image: grafana:1337
+    ports:
+      - 3000:3000
+    networks:
+      - inception
+    env_file: .env
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: always
 volumes:
   wordpressdb:
     name: wordpressdb
@@ -93,6 +105,13 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/yrimah/data/wp_files'
+  grafana_data:
+    name: grafana_data
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/yrimah/data/grafana'
 networks:
   inception:
     name: inception
