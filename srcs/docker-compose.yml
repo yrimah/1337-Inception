@@ -25,6 +25,7 @@ services:
     env_file: .env
     volumes:
       - wordpress_files:/var/www/html
+      - nginx_ssl:/etc/nginx/ssl
     restart: always
   wordpress:
     container_name: wordpress
@@ -87,8 +88,11 @@ services:
     networks:
       - inception
     env_file: .env
+    depends_on:
+      - nginx
     volumes:
       - grafana_data:/var/lib/grafana
+      - nginx_ssl:/grafana/nginx_ssl
     restart: always
 volumes:
   wordpressdb:
@@ -112,6 +116,14 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/yrimah/data/grafana'
+  nginx_ssl:
+    name: nginx_ssl
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/yrimah/data/nginx_ssl'
+
 networks:
   inception:
     name: inception
