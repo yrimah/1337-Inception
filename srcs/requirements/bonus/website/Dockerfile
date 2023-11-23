@@ -4,7 +4,7 @@ WORKDIR /website
 
 COPY conf/pelicanconf.py .
 
-COPY conf/publishconf.py .
+COPY conf/1337.png .
 
 COPY conf/config.sh .
 
