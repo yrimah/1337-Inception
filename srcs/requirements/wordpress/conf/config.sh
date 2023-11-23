@@ -31,7 +31,7 @@ if [ ! -f "$FILE" ]; then
 
 	wp redis enable --path=$WP_PATH --allow-root
 	
-	chown -R www-data:www-data /var/www/html
+	chown -R www-data:www-data /var/www/html/*
 else
 	echo "Success : Getting files from volume..."
 fi

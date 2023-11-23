@@ -10,8 +10,6 @@ chmod a-w /home/$FTP_USER/ftp
 
 mkdir /home/$FTP_USER/ftp/files
 
-chown $FTP_USER:$FTP_USER /home/$FTP_USER/ftp/files
-
 mkdir -p /var/run/vsftpd/empty 
 
 sed -i -r "s/#write_enable=YES/write_enable=YES/1" /etc/vsftpd.conf
@@ -26,5 +24,7 @@ pasv_max_port=40100
 userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
 
 echo $FTP_USER | tee -a /etc/vsftpd.userlist
+
+chown $FTP_USER:$FTP_USER /home/$FTP_USER/ftp/files
 
 /usr/sbin/vsftpd

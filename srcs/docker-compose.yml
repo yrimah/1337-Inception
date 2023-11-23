@@ -14,7 +14,7 @@ services:
       - wordpressdb:/var/lib/mysql
   nginx:
     container_name: nginx
-    build: requirements/nginx/
+    build: requirements/nginx
     image: nginx:1337
     ports:
       - 443:443
@@ -29,7 +29,7 @@ services:
     restart: always
   wordpress:
     container_name: wordpress
-    build: requirements/wordpress/
+    build: requirements/wordpress
     image: wordpress:1337
     ports:
       - 9000:9000
@@ -43,7 +43,7 @@ services:
       - wordpress_files:/var/www/html
   ftp:
     container_name: ftp
-    build: requirements/bonus/ftp/
+    build: requirements/bonus/ftp
     image: ftp:1337
     ports:
       - 21:21
@@ -51,12 +51,15 @@ services:
     networks:
       - inception
     env_file: .env
+    depends_on:
+      - nginx
+      - wordpress
     restart: always
     volumes:
       - wordpress_files:/home/$FTP_USER/ftp/files
   adminer:
     container_name: adminer
-    build: requirements/bonus/adminer/
+    build: requirements/bonus/adminer
     image: adminer:1337
     ports:
       - 8080:8080
@@ -67,7 +70,7 @@ services:
     restart: always
   redis:
     container_name: redis
-    build: requirements/bonus/redis/
+    build: requirements/bonus/redis
     image: redis:1337
     ports:
       - 6379:6379
@@ -81,7 +84,7 @@ services:
     restart: always
   grafana:
     container_name: grafana
-    build: requirements/bonus/grafana/
+    build: requirements/bonus/grafana
     image: grafana:1337
     ports:
       - 3000:3000
@@ -96,7 +99,7 @@ services:
     restart: always
   website:
     container_name: website
-    build: requirements/bonus/website/
+    build: requirements/bonus/website
     image: website:1337
     ports:
       - 8000:8000
