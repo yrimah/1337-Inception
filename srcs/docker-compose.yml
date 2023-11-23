@@ -94,6 +94,19 @@ services:
       - grafana_data:/var/lib/grafana
       - nginx_ssl:/grafana/nginx_ssl
     restart: always
+  website:
+    container_name: website
+    build: requirements/bonus/website/
+    image: website:1337
+    ports:
+      - 8000:8000
+    networks:
+      - inception
+    depends_on:
+      - nginx
+    volumes:
+      - website_files:/website/site/
+    restart: always
 volumes:
   wordpressdb:
     name: wordpressdb
@@ -123,7 +136,13 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/yrimah/data/nginx_ssl'
-
+  website_files:
+    name: website_files
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/yrimah/data/website_files'
 networks:
   inception:
     name: inception
