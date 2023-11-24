@@ -36,4 +36,4 @@ else
 	echo "Success : Getting files from volume..."
 fi
 
-/usr/sbin/php-fpm8.2 -F
+exec /usr/sbin/php-fpm8.2 -F

@@ -10,6 +10,4 @@ RUN chmod u+x config.sh install.sh
 
 RUN ./install.sh
 
-EXPOSE 20 21
-
 CMD ["./config.sh"]

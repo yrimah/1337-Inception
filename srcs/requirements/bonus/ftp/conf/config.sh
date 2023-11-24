@@ -1,14 +1,22 @@
 #!/bin/sh
 
-useradd -d /home/$FTP_USER -s /bin/bash $FTP_USER && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+cat /etc/shadow | grep $FTP_USER
 
-mkdir /home/$FTP_USER/ftp
+if [ $? -ne 0 ];then
+	useradd -d /home/$FTP_USER -s /bin/bash $FTP_USER && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+fi
+
+if [ ! -e /home/$FTP_USER/ftp ];then
+	mkdir /home/$FTP_USER/ftp
+fi
 
 chown nobody:nogroup /home/$FTP_USER/ftp
 
 chmod a-w /home/$FTP_USER/ftp
 
-mkdir /home/$FTP_USER/ftp/files
+if [ ! -e /home/$FTP_USER/ftp/files ];then
+	mkdir /home/$FTP_USER/ftp/files
+fi
 
 mkdir -p /var/run/vsftpd/empty 
 
@@ -27,4 +35,4 @@ echo $FTP_USER | tee -a /etc/vsftpd.userlist
 
 chown $FTP_USER:$FTP_USER /home/$FTP_USER/ftp/files
 
-/usr/sbin/vsftpd
+exec /usr/sbin/vsftpd

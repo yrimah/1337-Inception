@@ -8,4 +8,4 @@ sed -i -r "s/bind-address            = 127.0.0.1/bind-address	= 0.0.0.0/1" /etc/
 
 service mariadb stop
 
-/usr/bin/mysqld_safe
+exec /usr/bin/mysqld_safe

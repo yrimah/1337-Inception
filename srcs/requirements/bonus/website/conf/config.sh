@@ -20,4 +20,4 @@ Following is a review of yrimah inception project at 1337BG.' > content/keyboard
 
 pelican content -o output -s pelicanconf.py
 
-pelican content -l -r -b 0.0.0.0 -p 8000
+exec pelican content -l -r -b 0.0.0.0 -p 8000

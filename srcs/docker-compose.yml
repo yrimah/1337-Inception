@@ -3,7 +3,7 @@ services:
   mariadb:
     container_name: mariadb
     build: requirements/mariadb
-    image: mariadb:1337
+    image: mariadb:4
     ports:
       - 3306:3306
     networks:
@@ -15,7 +15,7 @@ services:
   nginx:
     container_name: nginx
     build: requirements/nginx
-    image: nginx:1337
+    image: nginx:4
     ports:
       - 443:443
     depends_on:
@@ -30,7 +30,7 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress
-    image: wordpress:1337
+    image: wordpress:4
     ports:
       - 9000:9000
     networks:
@@ -44,9 +44,10 @@ services:
   ftp:
     container_name: ftp
     build: requirements/bonus/ftp
-    image: ftp:1337
+    image: ftp:4
     ports:
       - 21:21
+      - 20:20
       - 40000-40100:40000-40100
     networks:
       - inception
@@ -60,7 +61,7 @@ services:
   adminer:
     container_name: adminer
     build: requirements/bonus/adminer
-    image: adminer:1337
+    image: adminer:4
     ports:
       - 8080:8080
     networks:
@@ -71,7 +72,7 @@ services:
   redis:
     container_name: redis
     build: requirements/bonus/redis
-    image: redis:1337
+    image: redis:4
     ports:
       - 6379:6379
     volumes:
@@ -85,7 +86,7 @@ services:
   grafana:
     container_name: grafana
     build: requirements/bonus/grafana
-    image: grafana:1337
+    image: grafana:4
     ports:
       - 3000:3000
     networks:
@@ -94,13 +95,13 @@ services:
     depends_on:
       - nginx
     volumes:
-      - grafana_data:/var/lib/grafana
+      - grafana_data:/usr/share/grafana
       - nginx_ssl:/grafana/nginx_ssl
     restart: always
   website:
     container_name: website
     build: requirements/bonus/website
-    image: website:1337
+    image: website:4
     ports:
       - 8000:8000
     networks:
