@@ -53,7 +53,6 @@ services:
       - inception
     env_file: .env
     depends_on:
-      - nginx
       - wordpress
     restart: always
     volumes:
@@ -66,6 +65,8 @@ services:
       - 8080:8080
     networks:
       - inception
+    depends_on:
+      - mariadb
     volumes:
       - wordpress_files:/var/www/html
     restart: always
@@ -106,8 +107,6 @@ services:
       - 8000:8000
     networks:
       - inception
-    depends_on:
-      - nginx
     volumes:
       - website_files:/website/site/
     restart: always
