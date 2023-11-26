@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cat /etc/shadow | grep $FTP_USER
+cat /etc/shadow | grep -w $FTP_USER
 
 if [ $? -ne 0 ];then
 	useradd -d /home/$FTP_USER -s /bin/bash $FTP_USER && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
@@ -20,8 +20,8 @@ fi
 
 mkdir -p /var/run/vsftpd/empty 
 
-sed -i -r "s/#write_enable=YES/write_enable=YES/1" /etc/vsftpd.conf
-sed -i -r "s/#chroot_local_user=YES/chroot_local_user=YES/1" /etc/vsftpd.conf
+sed -i "s/#write_enable=YES/write_enable=YES/1" /etc/vsftpd.conf
+sed -i "s/#chroot_local_user=YES/chroot_local_user=YES/1" /etc/vsftpd.conf
 
 echo "local_enable=YES
 allow_writeable_chroot=YES
