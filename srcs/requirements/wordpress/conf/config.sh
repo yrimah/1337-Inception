@@ -12,6 +12,8 @@ wp cli update
 
 sed -i 's#listen = /run/php/php8.2-fpm.sock#listen = 9000#' /etc/php/8.2/fpm/pool.d/www.conf
 
+sleep 10
+
 FILE="/var/www/html/wp-config.php"
 
 if [ ! -f "$FILE" ]; then
